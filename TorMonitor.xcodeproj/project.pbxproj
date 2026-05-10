@@ -1,0 +1,536 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A10001 /* TorMonitorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001 /* TorMonitorApp.swift */; };
+		A10002 /* SMCService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10002 /* SMCService.swift */; };
+		A10003 /* CPUService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10003 /* CPUService.swift */; };
+		A10004 /* MemoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10004 /* MemoryService.swift */; };
+		A10005 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10005 /* NetworkService.swift */; };
+		A10006 /* MonitorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10006 /* MonitorManager.swift */; };
+		A10007 /* StatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10007 /* StatusBarController.swift */; };
+		A10008 /* PopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10008 /* PopoverView.swift */; };
+		A10009 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10009 /* SettingsView.swift */; };
+		A1000A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1000A /* Assets.xcassets */; };
+		A1000B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1000B /* IOKit.framework */; };
+		A1000E /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000E /* Localization.swift */; };
+		A1000F /* CpuToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000F /* CpuToggle.swift */; };
+		A10010 /* CpuTempToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10010 /* CpuTempToggle.swift */; };
+		A10011 /* MemoryToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10011 /* MemoryToggle.swift */; };
+
+		A10013 /* NetworkToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10013 /* NetworkToggle.swift */; };
+		A10014 /* BatteryToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10014 /* BatteryToggle.swift */; };
+		A10015 /* GpuToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10015 /* GpuToggle.swift */; };
+		A10016 /* GpuTempToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10016 /* GpuTempToggle.swift */; };
+
+		A10018 /* LaunchAtLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10018 /* LaunchAtLoginService.swift */; };
+		A10019 /* BatteryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10019 /* BatteryService.swift */; };
+		A1001A /* ConnectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1001A /* ConnectionService.swift */; };
+		A1001B /* EnergyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1001B /* EnergyService.swift */; };
+		A1001C /* GPUService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1001C /* GPUService.swift */; };
+		A1001D /* IP2RegionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1001D /* IP2RegionService.swift */; };
+		A1001E /* PrivilegeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1001E /* PrivilegeService.swift */; };
+		A1001F /* ProcessCPUService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1001F /* ProcessCPUService.swift */; };
+		A10020 /* ProcessMemoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10020 /* ProcessMemoryService.swift */; };
+		A10021 /* ProcessNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10021 /* ProcessNetworkService.swift */; };
+		A10022 /* CPUProcessPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10022 /* CPUProcessPanel.swift */; };
+		A10023 /* MemoryProcessPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10023 /* MemoryProcessPanel.swift */; };
+		A10024 /* NetworkProcessPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10024 /* NetworkProcessPanel.swift */; };
+		A10025 /* ClickableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10025 /* ClickableLabel.swift */; };
+		A10026 /* AppKitSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10026 /* AppKitSwitch.swift */; };
+		A10027 /* xdb_searcher.c in Sources */ = {isa = PBXBuildFile; fileRef = B10027 /* xdb_searcher.c */; };
+		A10028 /* xdb_util.c in Sources */ = {isa = PBXBuildFile; fileRef = B10028 /* xdb_util.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		B10000 /* TorMonitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TorMonitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B10001 /* TorMonitorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TorMonitorApp.swift; sourceTree = "<group>"; };
+		B10002 /* SMCService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCService.swift; sourceTree = "<group>"; };
+		B10003 /* CPUService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUService.swift; sourceTree = "<group>"; };
+		B10004 /* MemoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryService.swift; sourceTree = "<group>"; };
+		B10005 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		B10006 /* MonitorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorManager.swift; sourceTree = "<group>"; };
+		B10007 /* StatusBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarController.swift; sourceTree = "<group>"; };
+		B10008 /* PopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverView.swift; sourceTree = "<group>"; };
+		B10009 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		B1000A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B1000B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		B1000C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B1000D /* TorMonitor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TorMonitor.entitlements; sourceTree = "<group>"; };
+		B1000E /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
+		B1000F /* CpuToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CpuToggle.swift; sourceTree = "<group>"; };
+		B10010 /* CpuTempToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CpuTempToggle.swift; sourceTree = "<group>"; };
+		B10011 /* MemoryToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryToggle.swift; sourceTree = "<group>"; };
+
+		B10013 /* NetworkToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkToggle.swift; sourceTree = "<group>"; };
+		B10014 /* BatteryToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryToggle.swift; sourceTree = "<group>"; };
+		B10015 /* GpuToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GpuToggle.swift; sourceTree = "<group>"; };
+		B10016 /* GpuTempToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GpuTempToggle.swift; sourceTree = "<group>"; };
+
+		B10018 /* LaunchAtLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAtLoginService.swift; sourceTree = "<group>"; };
+		B10019 /* BatteryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryService.swift; sourceTree = "<group>"; };
+		B1001A /* ConnectionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionService.swift; sourceTree = "<group>"; };
+		B1001B /* EnergyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyService.swift; sourceTree = "<group>"; };
+		B1001C /* GPUService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPUService.swift; sourceTree = "<group>"; };
+		B1001D /* IP2RegionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IP2RegionService.swift; sourceTree = "<group>"; };
+		B1001E /* PrivilegeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivilegeService.swift; sourceTree = "<group>"; };
+		B1001F /* ProcessCPUService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessCPUService.swift; sourceTree = "<group>"; };
+		B10020 /* ProcessMemoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessMemoryService.swift; sourceTree = "<group>"; };
+		B10021 /* ProcessNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessNetworkService.swift; sourceTree = "<group>"; };
+		B10022 /* CPUProcessPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUProcessPanel.swift; sourceTree = "<group>"; };
+		B10023 /* MemoryProcessPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryProcessPanel.swift; sourceTree = "<group>"; };
+		B10024 /* NetworkProcessPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProcessPanel.swift; sourceTree = "<group>"; };
+		B10025 /* ClickableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickableLabel.swift; sourceTree = "<group>"; };
+		B10026 /* AppKitSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKitSwitch.swift; sourceTree = "<group>"; };
+		B10027 /* xdb_searcher.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = xdb_searcher.c; sourceTree = "<group>"; };
+		B10028 /* xdb_util.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = xdb_util.c; sourceTree = "<group>"; };
+		B10029 /* xdb_api.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xdb_api.h; sourceTree = "<group>"; };
+		B1002A /* bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bridge.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C10001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1000B /* IOKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D10000 = {
+			isa = PBXGroup;
+			children = (
+				D10001 /* TorMonitor */,
+				D10005 /* Products */,
+				D10006 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		D10001 /* TorMonitor */ = {
+			isa = PBXGroup;
+			children = (
+				D10002 /* App */,
+				D10003 /* Core */,
+				D10004 /* Views */,
+				D10008 /* Vendor */,
+				D10007 /* Resources */,
+				B1000A /* Assets.xcassets */,
+			);
+			path = TorMonitor;
+			sourceTree = "<group>";
+		};
+		D10002 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				B10001 /* TorMonitorApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		D10003 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				B10002 /* SMCService.swift */,
+				B10003 /* CPUService.swift */,
+				B10004 /* MemoryService.swift */,
+				B10005 /* NetworkService.swift */,
+				B10006 /* MonitorManager.swift */,
+				B10007 /* StatusBarController.swift */,
+				B1000E /* Localization.swift */,
+				B1000F /* CpuToggle.swift */,
+				B10010 /* CpuTempToggle.swift */,
+				B10011 /* MemoryToggle.swift */,
+
+				B10013 /* NetworkToggle.swift */,
+				B10014 /* BatteryToggle.swift */,
+				B10015 /* GpuToggle.swift */,
+				B10016 /* GpuTempToggle.swift */,
+
+				B10018 /* LaunchAtLoginService.swift */,
+				B10019 /* BatteryService.swift */,
+				B1001A /* ConnectionService.swift */,
+				B1001B /* EnergyService.swift */,
+				B1001C /* GPUService.swift */,
+				B1001D /* IP2RegionService.swift */,
+				B1001E /* PrivilegeService.swift */,
+				B1001F /* ProcessCPUService.swift */,
+				B10020 /* ProcessMemoryService.swift */,
+				B10021 /* ProcessNetworkService.swift */,
+				B10022 /* CPUProcessPanel.swift */,
+				B10023 /* MemoryProcessPanel.swift */,
+				B10024 /* NetworkProcessPanel.swift */,
+				B10025 /* ClickableLabel.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		D10004 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B10008 /* PopoverView.swift */,
+				B10009 /* SettingsView.swift */,
+				B10026 /* AppKitSwitch.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D10005 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B10000 /* TorMonitor.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D10006 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B1000B /* IOKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D10007 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B1000C /* Info.plist */,
+				B1000D /* TorMonitor.entitlements */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		D10008 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				D10009 /* ip2region */,
+			);
+			path = Vendor;
+			sourceTree = "<group>";
+		};
+		D10009 /* ip2region */ = {
+			isa = PBXGroup;
+			children = (
+				B1002A /* bridge.h */,
+				B10029 /* xdb_api.h */,
+				B10027 /* xdb_searcher.c */,
+				B10028 /* xdb_util.c */,
+			);
+			path = ip2region;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E10001 /* TorMonitor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F10003 /* Build configuration list for PBXNativeTarget "TorMonitor" */;
+			buildPhases = (
+				C10002 /* Sources */,
+				C10001 /* Frameworks */,
+				C10003 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TorMonitor;
+			productName = TorMonitor;
+			productReference = B10000 /* TorMonitor.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E10000 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 2640;
+				TargetAttributes = {
+					E10001 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = F10001 /* Build configuration list for PBXProject "TorMonitor" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D10000;
+			productRefGroup = D10005 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E10001 /* TorMonitor */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C10003 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1000A /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C10002 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10001 /* TorMonitorApp.swift in Sources */,
+				A10002 /* SMCService.swift in Sources */,
+				A10003 /* CPUService.swift in Sources */,
+				A10004 /* MemoryService.swift in Sources */,
+				A10005 /* NetworkService.swift in Sources */,
+				A10006 /* MonitorManager.swift in Sources */,
+				A10007 /* StatusBarController.swift in Sources */,
+				A10008 /* PopoverView.swift in Sources */,
+				A10009 /* SettingsView.swift in Sources */,
+				A1000E /* Localization.swift in Sources */,
+				A1000F /* CpuToggle.swift in Sources */,
+				A10010 /* CpuTempToggle.swift in Sources */,
+				A10011 /* MemoryToggle.swift in Sources */,
+
+				A10013 /* NetworkToggle.swift in Sources */,
+				A10014 /* BatteryToggle.swift in Sources */,
+				A10015 /* GpuToggle.swift in Sources */,
+				A10016 /* GpuTempToggle.swift in Sources */,
+
+				A10018 /* LaunchAtLoginService.swift in Sources */,
+				A10019 /* BatteryService.swift in Sources */,
+				A1001A /* ConnectionService.swift in Sources */,
+				A1001B /* EnergyService.swift in Sources */,
+				A1001C /* GPUService.swift in Sources */,
+				A1001D /* IP2RegionService.swift in Sources */,
+				A1001E /* PrivilegeService.swift in Sources */,
+				A1001F /* ProcessCPUService.swift in Sources */,
+				A10020 /* ProcessMemoryService.swift in Sources */,
+				A10021 /* ProcessNetworkService.swift in Sources */,
+				A10022 /* CPUProcessPanel.swift in Sources */,
+				A10023 /* MemoryProcessPanel.swift in Sources */,
+				A10024 /* NetworkProcessPanel.swift in Sources */,
+				A10025 /* ClickableLabel.swift in Sources */,
+				A10026 /* AppKitSwitch.swift in Sources */,
+				A10027 /* xdb_searcher.c in Sources */,
+				A10028 /* xdb_util.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		F10004 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F10005 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		F10006 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = TorMonitor/Resources/TorMonitor.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = TorMonitor/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.luewire.tormonitor;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "TorMonitor/Vendor/ip2region/bridge.h";
+				SWIFT_VERSION = 5.0;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/TorMonitor/Vendor/ip2region";
+			};
+			name = Debug;
+		};
+		F10007 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = TorMonitor/Resources/TorMonitor.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = TorMonitor/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.luewire.tormonitor;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "TorMonitor/Vendor/ip2region/bridge.h";
+				SWIFT_VERSION = 5.0;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/TorMonitor/Vendor/ip2region";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F10001 /* Build configuration list for PBXProject "TorMonitor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F10004 /* Debug */,
+				F10005 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F10003 /* Build configuration list for PBXNativeTarget "TorMonitor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F10006 /* Debug */,
+				F10007 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E10000 /* Project object */;
+}
