@@ -2,11 +2,11 @@
 
 A lightweight macOS menu bar system monitor. All metrics are combined into a single status bar item with minimal resource usage.
 
-![macOS 13+](https://img.shields.io/badge/macOS-13%2B-blue) ![Swift](https://img.shields.io/badge/Swift-5-orange) ![License](https://img.shields.io/badge/License-Luewire-green)
+![macOS 13+](https://img.shields.io/badge/macOS-13%2B-blue) ![Swift](https://img.shields.io/badge/Swift-5-orange) ![RAM](https://img.shields.io/badge/RAM-%3C50MB-success) ![License](https://img.shields.io/badge/License-Luewire-green)
 
 ## Download
 
-You can download the latest version of TorMonitor as a `.dmg` file from the [Releases](https://github.com/luewire/TorMonitor/releases) page.
+You can download the latest version of TorMonitor as a `.dmg` file from the [Releases](https://github.com/luewire/TorMonitor/releases) page. The full source code is available here on GitHub.
 
 ---
 
@@ -27,6 +27,8 @@ You can download the latest version of TorMonitor as a `.dmg` file from the [Rel
 ---
 
 ## Features
+
+- **Ultra Lightweight** — Uses less than **50MB of RAM** during operation.
 
 - **CPU Usage** — Real-time percentage display via `host_processor_info`
 - **CPU Temperature** — Read from SMC (no root required)
