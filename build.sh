@@ -25,7 +25,6 @@ SOURCES=(
     TorMonitor/Core/CpuTempToggle.swift
     TorMonitor/Core/CpuToggle.swift
     TorMonitor/Core/MemoryToggle.swift
-    TorMonitor/Core/FanToggle.swift
     TorMonitor/Core/NetworkToggle.swift
     TorMonitor/Core/BatteryService.swift
     TorMonitor/Core/BatteryToggle.swift
@@ -103,3 +102,28 @@ codesign --force --sign - "${BUNDLE_DIR}"
 echo "==> Build complete: ${BUNDLE_DIR}"
 echo "==> Run with: open ${BUNDLE_DIR}"
 echo "==> Binary size: $(du -h "${MACOS_DIR}/${APP_NAME}" | cut -f1)"
+
+# --- DMG Creation ---
+echo "==> Creating DMG..."
+DMG_NAME="${APP_NAME}.dmg"
+DMG_STAGING="build/dmg_staging"
+
+# Clean up any old staging
+rm -rf "${DMG_STAGING}"
+mkdir -p "${DMG_STAGING}"
+
+# Copy .app and create Applications symlink
+cp -R "${BUNDLE_DIR}" "${DMG_STAGING}/"
+ln -s /Applications "${DMG_STAGING}/Applications"
+
+# Create the DMG
+hdiutil create -volname "${APP_NAME}" -srcfolder "${DMG_STAGING}" -ov -format UDZO "build/${DMG_NAME}"
+
+# Move DMG to parent directory (Documents)
+mv "build/${DMG_NAME}" "../${DMG_NAME}"
+
+# Clean up
+rm -rf "${DMG_STAGING}"
+
+echo "==> Success! DMG created at: $(cd .. && pwd)/${DMG_NAME}"
+

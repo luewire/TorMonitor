@@ -4,6 +4,10 @@ A lightweight macOS menu bar system monitor. All metrics are combined into a sin
 
 ![macOS 13+](https://img.shields.io/badge/macOS-13%2B-blue) ![Swift](https://img.shields.io/badge/Swift-5-orange) ![License](https://img.shields.io/badge/License-Luewire-green)
 
+## Download
+
+You can download the latest version of TorMonitor as a `.dmg` file from the [Releases](https://github.com/luewire/TorMonitor/releases) page.
+
 ---
 
 ## Screenshots
