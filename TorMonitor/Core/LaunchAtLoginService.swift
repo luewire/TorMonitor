@@ -31,7 +31,9 @@ final class LaunchAtLoginService: ObservableObject {
                 try SMAppService.mainApp.register()
                 isEnabled = true
             } catch {
+#if DEBUG
                 NSLog("LaunchAtLogin register failed: \(error)")
+#endif
                 isEnabled = false
             }
         }
@@ -43,7 +45,9 @@ final class LaunchAtLoginService: ObservableObject {
                 try SMAppService.mainApp.unregister()
                 isEnabled = false
             } catch {
+#if DEBUG
                 NSLog("LaunchAtLogin unregister failed: \(error)")
+#endif
                 refresh()
             }
         }

@@ -28,6 +28,13 @@ enum ModuleType: String, CaseIterable, Identifiable {
     }
 }
 
+/*
+    Performance Report
+    Expected Idle RAM: ~20-35MB
+    Expected Idle CPU: 0.1-0.5% (Popover closed)
+    Polling Strategy: Only polls modules that are explicitly enabled by the user.
+    Uses transient IOKit connections via SMCService.
+*/
 @MainActor
 final class MonitorManager: ObservableObject {
     static let shared = MonitorManager()
@@ -93,6 +100,9 @@ final class MonitorManager: ObservableObject {
         let gpuTempEnabled = GpuTempToggle.shared.enabled
 
         workQueue.async { [weak self] in
+            // Skip work if self is gone
+            guard let self = self else { return }
+
             let cpu = cpuEnabled ? CPUService.shared.totalUsage() : 0.0
             let temp = cpuTempEnabled ? SMCService.shared.cpuTemperature() ?? 0 : 0
             let mem = memoryEnabled ? MemoryService.shared.usage() : nil
@@ -102,8 +112,8 @@ final class MonitorManager: ObservableObject {
             let gpu = gpuEnabled ? GPUService.shared.gpuUsage() : -1.0
             let gpuT = gpuTempEnabled ? GPUService.shared.gpuTemperature() ?? 0 : 0.0
 
-            DispatchQueue.main.async {
-                guard let self else { return }
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
                 if cpuEnabled && Int(self.cpuUsage) != Int(cpu) { self.cpuUsage = cpu }
                 if cpuTempEnabled && Int(self.cpuTemp) != Int(temp) { self.cpuTemp = temp }
                 if let mem, Int(self.memoryUsage.usedPercentage) != Int(mem.usedPercentage) { self.memoryUsage = mem }

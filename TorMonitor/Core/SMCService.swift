@@ -5,117 +5,208 @@ public final class SMCService {
     public static let shared = SMCService()
 
     private let lock = NSLock()
-    private var connection: io_connect_t = 0
 
     // SMC selector — always use kernelIndex (2) for all operations
     private let kernelIndex: UInt32 = 2
 
-    private let intelTemperatureKeys = ["TC0P", "TC0D", "TC0E", "TC0F"]
-    private let appleSiliconTemperatureKeys = ["Tp09", "Tp0T", "Tp01", "Tp05"]
+    // MARK: - CPU Temperature Keys (sourced from exelban/stats values.swift)
 
-    private init() {
-        openConnection()
-    }
+    /// Intel proximity/diode fallback keys
+    private let intelCPUKeys = ["TC0P", "TC0D", "TC0E", "TC0F"]
 
-    deinit {
-        closeConnection()
-    }
+    /// M1 performance cores
+    private let m1PKeys = ["Tp01", "Tp05", "Tp0D", "Tp0H", "Tp0L", "Tp0P", "Tp0X", "Tp0b"]
+    /// M1 efficiency cores
+    private let m1EKeys = ["Tp09", "Tp0T"]
 
+    /// M2 performance cores
+    private let m2PKeys = ["Tp01", "Tp05", "Tp09", "Tp0D", "Tp0X", "Tp0b", "Tp0f", "Tp0j"]
+    /// M2 efficiency cores
+    private let m2EKeys = ["Tp1h", "Tp1t", "Tp1p", "Tp1l"]
+
+    /// M3 performance cores
+    private let m3PKeys = ["Tf04", "Tf09", "Tf0A", "Tf0B", "Tf0D", "Tf0E", "Tf44", "Tf49",
+                           "Tf4A", "Tf4B", "Tf4D", "Tf4E"]
+    /// M3 efficiency cores
+    private let m3EKeys = ["Te05", "Te0L", "Te0P", "Te0S"]
+
+    /// M4 performance cores
+    private let m4PKeys = ["Tp01", "Tp05", "Tp09", "Tp0D", "Tp0V", "Tp0Y", "Tp0b", "Tp0e"]
+    /// M4 efficiency cores
+    private let m4EKeys = ["Te05", "Te0S", "Te09", "Te0H"]
+
+    /// M5 super + performance cores
+    private let m5Keys = ["Tp00", "Tp04", "Tp08", "Tp0C", "Tp0G", "Tp0K",
+                          "Tp0O", "Tp0R", "Tp0U", "Tp0X", "Tp0a", "Tp0d",
+                          "Tp0g", "Tp0j", "Tp0m", "Tp0p", "Tp0u", "Tp0y"]
+
+    /// Apple Silicon ambient/airflow fallback
+    private let appleSiliconFallbackKeys = ["TaLP", "TaRF"]
+
+    // MARK: - GPU Temperature Keys (Apple Silicon)
+
+    /// M1 GPU keys
+    private let m1GPUKeys = ["Tg05", "Tg0D", "Tg0L", "Tg0T"]
+    /// M2 GPU keys
+    private let m2GPUKeys = ["Tg0f", "Tg0j"]
+    /// M3 GPU keys
+    private let m3GPUKeys = ["Tf14", "Tf18", "Tf19", "Tf1A", "Tf24", "Tf28", "Tf29", "Tf2A"]
+    /// M4 GPU keys (base M4 + Pro/Max/Ultra + shared)
+    private let m4GPUKeys = ["Tg0G", "Tg0H", "Tg1U", "Tg1k", "Tg0K", "Tg0L",
+                             "Tg0d", "Tg0e", "Tg0j", "Tg0k"]
+    /// M5 GPU keys
+    private let m5GPUKeys = ["Tg0U", "Tg0X", "Tg0d", "Tg0g", "Tg0j", "Tg1Y", "Tg1c", "Tg1g"]
+
+    private init() {}
+
+    // MARK: - Public: CPU Temperature
+
+    /// Returns the averaged CPU temperature across all valid Apple Silicon sensor readings.
+    /// Falls back to Intel proximity keys if no Apple Silicon keys respond.
     public func cpuTemperature() -> Double? {
-        let keys = intelTemperatureKeys + appleSiliconTemperatureKeys
-        for key in keys {
-            if let value = readNumericValue(forKey: key), value > 0, value < 150 {
-                return value
+        return withConnection { conn in
+            // Collect all Apple Silicon core keys (union covers M1/M2/M4 key overlaps naturally)
+            let appleSiliconKeys: [String] = m1PKeys + m1EKeys + m2EKeys + m3PKeys + m3EKeys + m5Keys
+            // m2PKeys and m4PKeys overlap heavily with m1PKeys — deduplicate via Set
+            let dedupedASKeys = Array(Set(appleSiliconKeys + m2PKeys + m4PKeys + m4EKeys))
+
+            let asReadings = validReadings(forKeys: dedupedASKeys, connection: conn)
+            if !asReadings.isEmpty {
+                return asReadings.reduce(0, +) / Double(asReadings.count)
             }
+
+            // Try Apple Silicon ambient/airflow fallback
+            let fallbackReadings = validReadings(forKeys: appleSiliconFallbackKeys, connection: conn)
+            if !fallbackReadings.isEmpty {
+                return fallbackReadings.reduce(0, +) / Double(fallbackReadings.count)
+            }
+
+            // Intel fallback — return first valid hit (legacy behavior)
+            for key in intelCPUKeys {
+                if let value = readNumericValue(forKey: key, connection: conn), value > 0, value < 120 {
+                    return value
+                }
+            }
+
+            return nil
         }
-        return nil
+    }
+
+    // MARK: - Public: GPU Temperature (Apple Silicon SMC)
+
+    /// Returns the averaged GPU temperature from Apple Silicon SMC keys.
+    /// Returns nil if none of the known GPU sensor keys respond (e.g. MacBook Air M4).
+    public func gpuTemperatureSMC() -> Double? {
+        return withConnection { conn in
+            let allGPUKeys = m1GPUKeys + m2GPUKeys + m3GPUKeys + m4GPUKeys + m5GPUKeys
+            let dedupedGPUKeys = Array(Set(allGPUKeys))
+            let readings = validReadings(forKeys: dedupedGPUKeys, connection: conn)
+            guard !readings.isEmpty else { return nil }
+            return readings.reduce(0, +) / Double(readings.count)
+        }
+    }
+
+    // MARK: - Private Helper
+
+    /// Returns all valid temperature readings (> 0, < 120°C) for the given keys.
+    private func validReadings(forKeys keys: [String], connection: io_connect_t) -> [Double] {
+        return keys.compactMap { key -> Double? in
+            guard let value = readNumericValue(forKey: key, connection: connection), value > 0, value < 120 else {
+                return nil
+            }
+            return value
+        }
     }
 
     public func fanCount() -> Int {
-        guard let result = readValue(forKey: "FNum") else {
-            return 0
-        }
+        return withConnection { conn in
+            guard let result = readValue(forKey: "FNum", connection: conn) else {
+                return 0
+            }
 
-        switch result.dataType {
-        case "ui8 ":
-            return Int(result.bytes[0])
-        case "ui16":
-            guard result.bytes.count >= 2 else { return 0 }
-            let raw = (UInt16(result.bytes[0]) << 8) | UInt16(result.bytes[1])
-            return Int(raw)
-        default:
-            return Int(parseNumericValue(bytes: result.bytes, dataType: result.dataType) ?? 0)
-        }
+            switch result.dataType {
+            case "ui8 ":
+                return Int(result.bytes[0])
+            case "ui16":
+                guard result.bytes.count >= 2 else { return 0 }
+                let raw = (UInt16(result.bytes[0]) << 8) | UInt16(result.bytes[1])
+                return Int(raw)
+            default:
+                return Int(parseNumericValue(bytes: result.bytes, dataType: result.dataType) ?? 0)
+            }
+        } ?? 0
     }
 
     public func fanSpeed(index: Int) -> Double? {
         guard index >= 0 else { return nil }
-        return readNumericValue(forKey: String(format: "F%dAc", index))
+        return withConnection { conn in
+            readNumericValue(forKey: String(format: "F%dAc", index), connection: conn)
+        }
     }
 
     public func readKey(_ key: String) -> Double? {
-        return readNumericValue(forKey: key)
+        return withConnection { conn in
+            readNumericValue(forKey: key, connection: conn)
+        }
     }
 
     public func allFanSpeeds() -> [(current: Double, min: Double, max: Double)] {
-        let count = fanCount()
-        guard count > 0 else { return [] }
+        return withConnection { conn in
+            // Let's implement fanCount directly inside using the connection
+            guard let result = readValue(forKey: "FNum", connection: conn) else { return [] }
+            var fanC = 0
+            switch result.dataType {
+            case "ui8 ": fanC = Int(result.bytes[0])
+            case "ui16": 
+                if result.bytes.count >= 2 { fanC = Int((UInt16(result.bytes[0]) << 8) | UInt16(result.bytes[1])) }
+            default: fanC = Int(parseNumericValue(bytes: result.bytes, dataType: result.dataType) ?? 0)
+            }
+            
+            guard fanC > 0 else { return [] }
 
-        var output: [(current: Double, min: Double, max: Double)] = []
-        output.reserveCapacity(count)
+            var output: [(current: Double, min: Double, max: Double)] = []
+            output.reserveCapacity(fanC)
 
-        for index in 0..<count {
-            let current = readNumericValue(forKey: String(format: "F%dAc", index)) ?? 0
-            let min = readNumericValue(forKey: String(format: "F%dMn", index)) ?? 0
-            let max = readNumericValue(forKey: String(format: "F%dMx", index)) ?? 0
-            output.append((current: current, min: min, max: max))
-        }
+            for index in 0..<fanC {
+                let current = readNumericValue(forKey: String(format: "F%dAc", index), connection: conn) ?? 0
+                let min = readNumericValue(forKey: String(format: "F%dMn", index), connection: conn) ?? 0
+                let max = readNumericValue(forKey: String(format: "F%dMx", index), connection: conn) ?? 0
+                output.append((current: current, min: min, max: max))
+            }
 
-        return output
+            return output
+        } ?? []
     }
 
     // MARK: - SMC Connection
 
-    private func openConnection() {
+    private func withConnection<T>(_ block: (io_connect_t) -> T?) -> T? {
         lock.lock()
         defer { lock.unlock() }
-
-        guard connection == 0 else { return }
 
         let service = IOServiceGetMatchingService(kIOMainPortDefault, IOServiceMatching("AppleSMC"))
-        guard service != 0 else { return }
+        guard service != 0 else { return nil }
         defer { IOObjectRelease(service) }
 
-        var openedConnection: io_connect_t = 0
-        let result = IOServiceOpen(service, mach_task_self_, 0, &openedConnection)
-        guard result == KERN_SUCCESS else { return }
+        var conn: io_connect_t = 0
+        let result = IOServiceOpen(service, mach_task_self_, 0, &conn)
+        guard result == KERN_SUCCESS else { return nil }
 
-        connection = openedConnection
-    }
-
-    private func closeConnection() {
-        lock.lock()
-        defer { lock.unlock() }
-
-        guard connection != 0 else { return }
-        IOServiceClose(connection)
-        connection = 0
+        defer { IOServiceClose(conn) }
+        
+        return block(conn)
     }
 
     // MARK: - SMC Read
 
-    private func readNumericValue(forKey key: String) -> Double? {
-        guard let value = readValue(forKey: key) else {
+    private func readNumericValue(forKey key: String, connection: io_connect_t) -> Double? {
+        guard let value = readValue(forKey: key, connection: connection) else {
             return nil
         }
         return parseNumericValue(bytes: value.bytes, dataType: value.dataType)
     }
 
-    private func readValue(forKey key: String) -> SMCReadResult? {
-        lock.lock()
-        defer { lock.unlock() }
-
-        guard connection != 0 else { return nil }
+    private func readValue(forKey key: String, connection: io_connect_t) -> SMCReadResult? {
         guard let encodedKey = encodeSMCKey(key) else { return nil }
 
         var input = SMCKeyData()
@@ -125,7 +216,7 @@ public final class SMCService {
         input.key = encodedKey
         input.data8 = SMCCommand.readKeyInfo.rawValue
 
-        guard callSMC(input: &input, output: &output) else {
+        guard callSMC(connection: connection, input: &input, output: &output) else {
             return nil
         }
 
@@ -138,7 +229,7 @@ public final class SMCService {
         input.keyInfo.dataSize = keyInfo.dataSize
         input.data8 = SMCCommand.readBytes.rawValue
 
-        guard callSMC(input: &input, output: &output) else {
+        guard callSMC(connection: connection, input: &input, output: &output) else {
             return nil
         }
 
@@ -150,7 +241,7 @@ public final class SMCService {
     }
 
     /// Always calls with kernelIndex (2) as selector, matching Stats behavior
-    private func callSMC(input: inout SMCKeyData, output: inout SMCKeyData) -> Bool {
+    private func callSMC(connection: io_connect_t, input: inout SMCKeyData, output: inout SMCKeyData) -> Bool {
         let inputSize = MemoryLayout<SMCKeyData>.stride
         var outputSize = MemoryLayout<SMCKeyData>.stride
 

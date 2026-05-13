@@ -16,6 +16,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var statusBarController: StatusBarController?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        // Kick off one-time hardware detection (GPU sensor, fan) on a background thread
+        _ = SensorDetector.shared
+
         statusBarController = StatusBarController(manager: MonitorManager.shared)
 
         DistributedNotificationCenter.default().addObserver(
@@ -39,7 +42,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             proc.arguments = ["-a", "Terminal", directory]
             try proc.run()
         } catch {
+#if DEBUG
             NSLog("TorMonitor: open terminal failed: %@", error.localizedDescription)
+#endif
         }
     }
 }

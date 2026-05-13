@@ -130,10 +130,7 @@ final class StatusBarController: NSObject, NSPopoverDelegate {
     }
 
     nonisolated func popoverDidClose(_ notification: Notification) {
-        MainActor.assumeIsolated {
-            popover.contentViewController = nil
-            hostingController = nil
-        }
+        // Keep the contentViewController cached to prevent recreating the view hierarchy
     }
 
 
@@ -196,7 +193,10 @@ final class StatusBarController: NSObject, NSPopoverDelegate {
         segmentVisibility[.network] = NetworkToggle.shared.enabled
         segmentVisibility[.battery] = BatteryService.hasBattery && BatteryToggle.shared.enabled
         segmentVisibility[.gpu] = GPUService.hasGPU && GpuToggle.shared.enabled
-        segmentVisibility[.gpuTemp] = GPUService.hasGPU && GpuTempToggle.shared.enabled
+        // gpuTemp segment requires both a GPU and an accessible GPU temperature sensor
+        segmentVisibility[.gpuTemp] = GPUService.hasGPU
+            && SensorDetector.shared.hasGPUSensor
+            && GpuTempToggle.shared.enabled
     }
 
     private func scheduleRender() {
@@ -505,7 +505,8 @@ final class StatusBarController: NSObject, NSPopoverDelegate {
             queue: .main
         ) { [weak self] notification in
             guard let self, let enabled = notification.userInfo?["enabled"] as? Bool else { return }
-            self.setVisibility(GPUService.hasGPU && enabled, for: .gpuTemp)
+            // Only allow gpuTemp segment if hardware actually exposes a GPU temp sensor
+            self.setVisibility(GPUService.hasGPU && SensorDetector.shared.hasGPUSensor && enabled, for: .gpuTemp)
         }
     }
 
@@ -618,9 +619,11 @@ final class StatusBarController: NSObject, NSPopoverDelegate {
         if popover.isShown {
             popover.performClose(sender)
         } else {
-            let hc = NSHostingController(rootView: PopoverView(manager: manager))
-            hostingController = hc
-            popover.contentViewController = hc
+            if hostingController == nil {
+                let hc = NSHostingController(rootView: PopoverView(manager: manager))
+                hostingController = hc
+                popover.contentViewController = hc
+            }
             popover.show(relativeTo: sender.bounds, of: sender, preferredEdge: .minY)
             popover.contentViewController?.view.window?.makeKey()
         }

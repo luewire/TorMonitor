@@ -8,7 +8,9 @@ class FinderMenuSync: FIFinderSync {
     override init() {
         super.init()
         FIFinderSyncController.default().directoryURLs = Set([URL(fileURLWithPath: "/")])
+#if DEBUG
         NSLog("FinderMenuSync launched from %@", Bundle.main.bundlePath as NSString)
+#endif
     }
 
     // MARK: - Context Menu

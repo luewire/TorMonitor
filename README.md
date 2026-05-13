@@ -1,8 +1,18 @@
-# TorMonitor
+# TorMonitor `v2.0.0`
 
-A lightweight macOS menu bar system monitor. All metrics are combined into a single status bar item with minimal resource usage.
+A lightweight, premium macOS menu bar system monitor. All metrics are combined into a single status bar item with minimal resource usage and a modern glassmorphism aesthetic.
 
-![macOS 13+](https://img.shields.io/badge/macOS-13%2B-blue) ![Swift](https://img.shields.io/badge/Swift-5-orange) ![RAM](https://img.shields.io/badge/RAM-%3C50MB-success) ![License](https://img.shields.io/badge/License-Luewire-green)
+![macOS 14+](https://img.shields.io/badge/macOS-14%2B-blue) ![Swift](https://img.shields.io/badge/Swift-6-orange) ![RAM](https://img.shields.io/badge/RAM-%3C35MB-success) ![License](https://img.shields.io/badge/License-Luewire-green)
+
+---
+
+## 🚀 What's New in v2.0.0
+
+- **Modern Glassmorphism UI** — Completely redesigned Settings popover with a premium macOS Sonoma/Sequoia aesthetic using `.ultraThinMaterial`.
+- **Advanced Memory Optimization** — RAM footprint reduced to ~25-35MB via transient IOKit connections and Equatable View caching.
+- **Apple Silicon Native** — Accurate CPU temperature readings for M1, M2, M3, M4, and M5 chips using averaged core sensor data.
+- **Dynamic Hardware Detection** — Automatically hides GPU and Fan metrics on fanless or GPU-less devices (like MacBook Air).
+
 
 ## Download
 
@@ -28,7 +38,8 @@ You can download the latest version of TorMonitor as a `.dmg` file from the [Rel
 
 ## Features
 
-- **Ultra Lightweight** — Uses less than **50MB of RAM** during operation.
+- **Ultra Lightweight** — Uses less than **35MB of RAM** (idle) thanks to custom SwiftUI view caching and zero persistent IOKit leaks.
+- **Premium Design** — Smooth spring animations, custom pill-segmented controls, and hover highlights.
 
 - **CPU Usage** — Real-time percentage display via `host_processor_info`
 - **CPU Temperature** — Read from SMC (no root required)
@@ -74,7 +85,7 @@ You can download the latest version of TorMonitor as a `.dmg` file from the [Rel
 ```bash
 git clone https://github.com/luewire/tormonitor.git
 cd tormonitor
-xcodebuild -project MacState.xcodeproj -scheme MacState build
+xcodebuild -project TorMonitor.xcodeproj -scheme TorMonitor build
 ```
 
 ---
@@ -82,9 +93,9 @@ xcodebuild -project MacState.xcodeproj -scheme MacState build
 ## Project Structure
 
 ```
-MacState/
+TorMonitor/
 ├── App/
-│   └── MacStateApp.swift              # App entry point
+│   └── TorMonitorApp.swift            # App entry point
 ├── Core/
 │   ├── StatusBarController.swift      # Menu bar rendering & interaction
 │   ├── MonitorManager.swift           # Data polling & refresh scheduling
@@ -93,22 +104,18 @@ MacState/
 │   ├── NetworkService.swift           # Network speed
 │   ├── BatteryService.swift           # Battery & charging power
 │   ├── GPUService.swift               # GPU usage & temperature
-│   ├── SMCService.swift               # SMC reads (temperature)
-│   ├── IP2RegionService.swift         # Offline IP geo lookup (lazy-loaded)
-│   ├── Localization.swift             # English string definitions
+│   ├── SMCService.swift               # SMC reads (transient connections)
+│   ├── SensorDetector.swift           # Hardware-specific auto-detection
+│   ├── Localization.swift             # Localized string definitions
 │   ├── LaunchAtLoginService.swift     # Launch at login
-│   ├── CpuToggle.swift                # CPU usage toggle
-│   ├── CpuTempToggle.swift            # CPU temp toggle
-│   ├── MemoryToggle.swift             # Memory toggle
-│   ├── NetworkToggle.swift            # Network toggle
-│   ├── BatteryToggle.swift            # Battery toggle
-│   ├── GpuToggle.swift                # GPU usage toggle
-│   └── GpuTempToggle.swift            # GPU temp toggle
+│   └── Toggles/                       # Individual module toggle states
 ├── Views/
-│   ├── SettingsView.swift             # Settings popover UI
+│   ├── DesignTokens.swift             # Centralized UI tokens (colors, radii)
+│   ├── ModuleRowView.swift            # Equatable row components
+│   ├── PillSegmentedControl.swift     # Custom animated picker
+│   ├── SettingsView.swift             # Modern Settings popover UI
 │   └── PopoverView.swift              # Popover container
 ├── Resources/
-│   ├── ip2region_v4.xdb               # Offline IP geo database
 │   └── Info.plist
 └── Assets.xcassets/
 ```
@@ -120,7 +127,7 @@ MacState/
 | Metric | Source |
 |---|---|
 | CPU Usage | `host_processor_info` |
-| CPU Temperature | IOKit SMC (`TC0P`) |
+| CPU Temperature | IOKit SMC (M1-M5 core averaged keys) |
 | Memory | `host_statistics64` |
 | Network Speed | `sysctl NET_RT_IFLIST2` |
 | Charging Power | IOKit `AppleSmartBattery` + SMC `PDTR` |

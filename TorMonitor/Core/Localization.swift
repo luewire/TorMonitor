@@ -103,4 +103,5 @@ final class L10n: ObservableObject {
     var general: String { language == .zh ? "通用" : "General" }
     var launchAtLogin: String { language == .zh ? "开机自启动" : "Launch at Login" }
     var languageLabel: String { language == .zh ? "语言" : "Language" }
+    var fanSpeed: String { language == .zh ? "风扇转速" : "Fan Speed" }
 }

@@ -67,8 +67,13 @@ final class GPUService {
     }
 
     func gpuTemperature() -> Double? {
+        // First try IOAccelerator path (works on Intel/AMD/Nvidia discrete GPUs)
         let temps = allGPUTemperatures()
-        return temps.map { $0.temp }.max()
+        if let maxTemp = temps.map({ $0.temp }).max(), maxTemp > 0 {
+            return maxTemp
+        }
+        // Fallback: Apple Silicon SMC sensor keys
+        return SMCService.shared.gpuTemperatureSMC()
     }
 
     func allGPUTemperatures() -> [(label: String, temp: Double)] {
@@ -91,16 +96,16 @@ final class GPUService {
 
                 var temp: Double? = nil
                 if let stats = dict["PerformanceStatistics"] as? [String: Any],
-                   let t = stats["Temperature(C)"] as? Int, t > 0, t < 150 {
+                   let t = stats["Temperature(C)"] as? Int, t > 0, t < 120 {
                     temp = Double(t)
                 }
 
                 let cls = ioClass.lowercased()
                 if temp == nil {
                     if cls.contains("amd") {
-                        if let v = SMCService.shared.readKey(smcFallbackAMD), v > 0, v < 150 { temp = v }
+                        if let v = SMCService.shared.readKey(smcFallbackAMD), v > 0, v < 120 { temp = v }
                     } else if cls.contains("intel") {
-                        if let v = SMCService.shared.readKey(smcFallbackIntel), v > 0, v < 150 { temp = v }
+                        if let v = SMCService.shared.readKey(smcFallbackIntel), v > 0, v < 120 { temp = v }
                     }
                 }
 

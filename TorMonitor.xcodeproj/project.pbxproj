@@ -27,6 +27,10 @@
 		A10014 /* BatteryToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10014 /* BatteryToggle.swift */; };
 		A10015 /* GpuToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10015 /* GpuToggle.swift */; };
 		A10016 /* GpuTempToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10016 /* GpuTempToggle.swift */; };
+		A30001 /* DesignTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30001 /* DesignTokens.swift */; };
+		A30002 /* ModuleRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30002 /* ModuleRowView.swift */; };
+		A30003 /* PillSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30003 /* PillSegmentedControl.swift */; };
+		A20001 /* SensorDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20001 /* SensorDetector.swift */; };
 
 		A10018 /* LaunchAtLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10018 /* LaunchAtLoginService.swift */; };
 		A10019 /* BatteryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10019 /* BatteryService.swift */; };
@@ -71,6 +75,10 @@
 		B10014 /* BatteryToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryToggle.swift; sourceTree = "<group>"; };
 		B10015 /* GpuToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GpuToggle.swift; sourceTree = "<group>"; };
 		B10016 /* GpuTempToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GpuTempToggle.swift; sourceTree = "<group>"; };
+		B30001 /* DesignTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignTokens.swift; sourceTree = "<group>"; };
+		B30002 /* ModuleRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleRowView.swift; sourceTree = "<group>"; };
+		B30003 /* PillSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillSegmentedControl.swift; sourceTree = "<group>"; };
+		B20001 /* SensorDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorDetector.swift; sourceTree = "<group>"; };
 
 		B10018 /* LaunchAtLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAtLoginService.swift; sourceTree = "<group>"; };
 		B10019 /* BatteryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryService.swift; sourceTree = "<group>"; };
@@ -153,6 +161,7 @@
 				B10014 /* BatteryToggle.swift */,
 				B10015 /* GpuToggle.swift */,
 				B10016 /* GpuTempToggle.swift */,
+				B20001 /* SensorDetector.swift */,
 
 				B10018 /* LaunchAtLoginService.swift */,
 				B10019 /* BatteryService.swift */,
@@ -177,6 +186,9 @@
 			children = (
 				B10008 /* PopoverView.swift */,
 				B10009 /* SettingsView.swift */,
+				B30001 /* DesignTokens.swift */,
+				B30002 /* ModuleRowView.swift */,
+				B30003 /* PillSegmentedControl.swift */,
 				B10026 /* AppKitSwitch.swift */,
 			);
 			path = Views;
@@ -313,6 +325,10 @@
 				A10014 /* BatteryToggle.swift in Sources */,
 				A10015 /* GpuToggle.swift in Sources */,
 				A10016 /* GpuTempToggle.swift in Sources */,
+				A30001 /* DesignTokens.swift in Sources */,
+				A30002 /* ModuleRowView.swift in Sources */,
+				A30003 /* PillSegmentedControl.swift in Sources */,
+				A20001 /* SensorDetector.swift in Sources */,
 
 				A10018 /* LaunchAtLoginService.swift in Sources */,
 				A10019 /* BatteryService.swift in Sources */,
